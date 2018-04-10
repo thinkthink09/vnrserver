@@ -4,21 +4,26 @@ Welcome to **VNRServer**
 
 This is a server template with:
 
-Frontend: Vue.js
+Frontend: **V** ue.js + Webpack +
 
-Backend: Node.js
+Backend: **N** ode.js + Express.js +
 
-Database: RethinkDB
+Database: **R** ethinkDB
 
-please put all your learnings here, please *do not delete* other's work
+This is a prototype of how we're gonna build servers,
+in the future we can also use only partials of this project.
+For instance using the Backend setup of this project but using React.js for frontend.
 
 ---
 
-## How to do something
+## How to start the servers:
 
-the problem is ..., so we might want to:
+I'm not sure how to yet, probably:
 ```
-this is how you do it
+npm run dev;
+```
+```
+node app.js;
 ```
 here's a [link](www.google.com) to the reference
 
@@ -44,4 +49,4 @@ vue init webpack vue
 ```
 yarn init
 ```
-5.
+5. My current progress is [here](https://youtu.be/Fa4cRMaTDUI?t=26m38s)
