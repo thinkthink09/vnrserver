@@ -1,0 +1,29 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "backend part of VNRServer",
+  "author": "Alan Chou <alanchou09@gmail.com>",
+  "private": true,
+  "scripts": {
+    "babel-node": "babel-node src/app.js",
+    "dev": "./node_modules/.bin/nodemon --exec 'npm run lint && npm run babel-node'",
+    "start": "npm run dev",
+    "lint": "./node_modules/.bin/eslint **/*.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-latest": "^6.24.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-import": "^2.11.0",
+    "nodemon": "^1.17.3"
+  }
+}
