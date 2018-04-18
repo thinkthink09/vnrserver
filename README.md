@@ -18,25 +18,18 @@ For instance using the Backend setup of this project but using React.js for fron
 
 ## How to start the servers:
 
-I'm not sure how to yet, probably:
 ```
-npm run dev;
+vue$ npm start;
+node$ npm start;
 ```
-```
-node app.js;
-```
-here's a [link](www.google.com) to the reference
 
 ---
 
 ## Notes:
 
-here's how I got to this point for this project:
+here's how to setup both environments:
 
-1. install node.js, install yarn
-```
-brew install yarn
-```
+1. install node.js.
 2. install vue client
 ```
 npm install -g vue-cli
@@ -45,8 +38,43 @@ npm install -g vue-cli
 ```
 vue init webpack vue
 ```
-4. ask vue init to run yarn init or npm init, or run it yourself
+4. ask vue init to run npm install, or run it yourself
 ```
-yarn init
+cd vue;
+npm install;
+cd ..;
 ```
-5. My current progress is [here](https://youtu.be/Fa4cRMaTDUI?t=26m38s)
+5. setup the backend, make a folder called node and init npm in it
+```
+mkdir node;
+cd node;
+npm init;
+```
+6. install nodemon, eslint
+```
+npm install --save nodemon eslint
+```
+7. configure eslint
+```
+./node_modules/.bin/eslint --init
+```
+8. install express and other tools
+```
+npm install --save express cors morgan body-parser
+```
+9. install babel to be able to compile es7
+```
+npm install --save-dev babel-cli
+npm install --save-dev babel-preset-env
+```
+10. setup package.json, setup these scripts:
+```
+"scripts": {
+  "babel-node": "babel-node src/app.js",
+  "dev": "./node_modules/.bin/nodemon --exec 'npm run lint && npm run babel-node'",
+  "start": "npm run dev",
+  "lint": "./node_modules/.bin/eslint **/*.js"
+}
+```
+
+My current progress is https://youtu.be/Fa4cRMaTDUI?t=37m19s
