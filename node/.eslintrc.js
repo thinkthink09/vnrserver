@@ -1,3 +1,13 @@
 module.exports = {
-    "extends": "airbnb-base"
-};
+  root: true,
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+  env: {
+    node: true,
+  },
+  extends: [
+    "airbnb-base",
+    "standard"
+  ]
+}
