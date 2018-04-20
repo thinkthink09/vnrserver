@@ -4,13 +4,13 @@ import Sequelize from 'sequelize'
 import config from '../config/config'
 
 const db = {}
-if(config.db) {
-  const sequelize = new Sequelize(config.db)
+if(config.sequelize) {
+  const sequelize = new Sequelize(config.sequelize)
 
   fs.readdirSync(__dirname)
-    .filter((file) => {
+    .filter((file) =>
       file.startsWith('Sequelize')
-    })
+    )
     .forEach((file) => {
       const model = sequelize.import(path.join(__dirname, file))
       db[model.name] = model

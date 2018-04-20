@@ -2,9 +2,10 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import cors from 'cors'
+import r from 'rethinkdb'
 import config from './config/config'
-import { sequelize } from './model/models'
-import routes from './route/routes'
+import { sequelize } from './model/.models'
+import routes from './controller/.routes'
 
 const app = express()
 
@@ -23,8 +24,14 @@ const start = () => {
   })
 }
 
-if (config.db) {
+if (config.sequelize) {
   sequelize.sync().then(start)
+} else if(config.rethinkdb) {
+  r.connect(config.rethinkdb, (err, conn) => {
+    if (err) throw err
+    app.rtdbConn = conn
+    start()
+  })
 } else {
   start()
 }

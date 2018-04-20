@@ -2,7 +2,7 @@ module.exports = {
   port: process.env.PORT || 3000,
 
   /*
-  db: {
+  sequelize: {
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -10,6 +10,13 @@ module.exports = {
       dialect: process.env.DB_DIALECT,
       host: process.env.DB_HOST
     }
-  }
+  },
   */
+  rethinkdb: {
+    host: process.env.DB_HOST || 'ec2-54-149-69-99.us-west-2.compute.amazonaws.com',
+    port: process.env.DB_PORT || 28015,
+    db: process.env.DB_NAME || 'Training',
+    user: process.env.DB_USER || 'rethinkdb',
+    password: process.env.DB_PASS || 'rethinkdb'
+  }
 }
