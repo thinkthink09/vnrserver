@@ -26,7 +26,7 @@ const start = () => {
 
 if (config.sequelize) {
   sequelize.sync().then(start)
-} else if(config.rethinkdb) {
+} else if (config.rethinkdb) {
   r.connect(config.rethinkdb, (err, conn) => {
     if (err) throw err
     app.rtdbConn = conn
