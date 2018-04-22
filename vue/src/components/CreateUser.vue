@@ -5,7 +5,10 @@
     <input type="text" id="name" name="name" v-model="user.name"/>
 
     <label for="email">Email</label>
-    <input type="text" id="email" name="email" v-model="user.email"/>
+    <input type="email" id="email" name="email" v-model="user.email"/>
+
+    <label for="email">Password</label>
+    <input type="password" id="password" name="password" v-model="user.password"/>
 
     <button @click="createUser">create</button>
     <h3>{{response}}</h3>
@@ -20,8 +23,9 @@ export default {
   data () {
     return {
       user: {
-        name: '',
-        email: ''
+        name: 'testuser',
+        email: 'testuser@vnr.com',
+        password: 'testuser1'
       },
       response: ''
     }
