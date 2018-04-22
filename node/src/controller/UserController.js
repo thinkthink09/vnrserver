@@ -29,7 +29,8 @@ UserController.get('/list', (req, res, next) => {
 })
 
 UserController.get('/count', (req, res, next) => {
- r.table(User.table).count().run(rconn).then((count) => {
+ r.table(User.table).count().run(rconn)
+ .then((count) => {
    res.json(count)
  }).error((error) => {
    res.json(error)
@@ -38,16 +39,15 @@ UserController.get('/count', (req, res, next) => {
 
 UserController.post('/create', async (req, res, next) => {
   if (!validateUserData(req.body)) {
-    res.send('invalid user data')
+    res.status(400).send('invalid user data')
     next()
     return
   }
 
   let newUser = new User(req.body)
-  console.log(await existUserWithEmail(newUser.email))
 
   if (await existUserWithEmail(newUser.email)) {
-    res.send('user email already exists')
+    res.status(400).send('user email already exists')
     next()
     return
   }
@@ -55,7 +55,7 @@ UserController.post('/create', async (req, res, next) => {
   if(await createUser(newUser)) {
     res.send('user successfully created')
   } else {
-    res.send('user creation failed')
+    res.status(400).send('user creation failed')
   }
   next()
 })
@@ -65,17 +65,13 @@ function validateUserData(user) {
 }
 
 async function existUserWithEmail(email) {
-  let check = false
-  await r.table(User.table)
-  .filter((user) => user.email == email).count().run(rconn)
-  .then((count) => {
-    check = count > 0
-  })
-  return check
+  return await r.table(User.table)
+  .filter({email: email}).count().run(rconn)
 }
 
 async function createUser(user) {
-  return false
+  return await r.table(User.table)
+  .insert(user).run(rconn).then((result) => result.inserted)
 }
 
 export default UserController

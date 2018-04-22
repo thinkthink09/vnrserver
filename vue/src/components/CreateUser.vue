@@ -21,19 +21,24 @@ import UserService from '@/services/UserService'
 export default {
   name: 'CreateUser',
   data () {
+    let name = (+new Date()).toString(36)
     return {
       user: {
-        name: 'testuser',
-        email: 'testuser@vnr.com',
-        password: 'testuser1'
+        name: name,
+        email: name + '@vnr.com',
+        password: name
       },
       response: ''
     }
   },
   methods: {
     async createUser () {
-      const response = await UserService.create(this.user)
-      this.response = response.data
+      try {
+        const response = await UserService.create(this.user)
+        this.response = response.data
+      } catch (error) {
+        this.response = error.response.data
+      }
     }
   }
 }
