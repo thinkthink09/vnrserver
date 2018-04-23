@@ -1,17 +1,75 @@
 <template>
   <div>
-    <h1>Create User</h1>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" v-model="user.name"/>
+    <v-container fluid fill-height>
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm10 md8 lg6>
+          <v-layout row wrap>
+            <v-flex>
+              <h1 class="text-xs-center mt-5">Create User</h1>
+            </v-flex>
+          </v-layout>
+          <v-card class="elevation-12 mt-5 pa-3">
+            <v-layout row wrap align-center>
+              <v-flex xs2 text-lg-right>
+                <h3 class="pr-3">Name</h3>
+              </v-flex>
+              <v-flex xs12 sm10>
+                <v-text-field
+                  v-model="user.name"
+                  label="Your User Name Here"
+                  single-line
+                  prepend-icon="person"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" v-model="user.email"/>
+            <v-layout row wrap align-center>
+              <v-flex xs2 text-lg-right>
+                <h3 class="pr-3">Email</h3>
+              </v-flex>
+              <v-flex xs12 sm10>
+                <v-text-field
+                  v-model="user.email"
+                  label="Your User Name Here"
+                  single-line
+                  prepend-icon="mail"
+                  type="email"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
 
-    <label for="email">Password</label>
-    <input type="password" id="password" name="password" v-model="user.password"/>
-
-    <button @click="createUser">create</button>
-    <h3>{{response}}</h3>
+            <v-layout row wrap align-center>
+              <v-flex xs2 text-lg-right>
+                <h3 class="pr-3">Password</h3>
+              </v-flex>
+              <v-flex xs12 sm10>
+                <v-text-field
+                  v-model="user.password"
+                  label="Your User Name Here"
+                  single-line
+                  prepend-icon="lock"
+                  type="password"
+                ></v-text-field>
+              </v-flex>
+            </v-layout>
+            <div class="mt-5">
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-btn large color="indigo" @click="createUser">
+                    create
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </div>
+          </v-card>
+          <v-layout row wrap>
+            <v-flex>
+              <h3 class="text-xs-center mt-4">{{response}}</h3>
+            </v-flex>
+          </v-layout>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
