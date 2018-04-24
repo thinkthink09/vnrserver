@@ -5,7 +5,7 @@
         <v-flex xs12 sm10 md8 lg6>
           <v-layout row wrap>
             <v-flex>
-              <h1 class="text-xs-center mt-5">Create User</h1>
+              <h1 class="text-xs-center mt-5">Register</h1>
             </v-flex>
           </v-layout>
           <v-card class="elevation-12 mt-5 pa-3">
@@ -55,8 +55,8 @@
             <div class="mt-5">
               <v-layout row wrap>
                 <v-flex xs12>
-                  <v-btn large color="indigo" @click="createUser">
-                    create
+                  <v-btn large color="indigo" @click="register">
+                    sign up
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -77,7 +77,7 @@
 import UserService from '@/services/UserService'
 
 export default {
-  name: 'CreateUser',
+  name: 'Register',
   data () {
     let name = (+new Date()).toString(36)
     return {
@@ -90,9 +90,9 @@ export default {
     }
   },
   methods: {
-    async createUser () {
+    async register () {
       try {
-        const response = await UserService.create(this.user)
+        const response = await UserService.register(this.user)
         this.response = response.data
       } catch (error) {
         this.response = error.response.data

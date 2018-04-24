@@ -18,47 +18,46 @@ UserController.use((req, res, next) => {
 /**
  * TODO should remove this when doing real world things
  */
-UserController.get('/list', (req, res, next) => {
-  r.table(User.table).run(rconn).then((users) =>
-    users.toArray()
-  ).then((result) => {
-    res.json(result)
-  }).error((error) => {
-    res.json(error)
-  }).finally(next)
+UserController.get('/list', async (req, res) => {
+  res.json(await r.table(User.table).run(rconn).then((users) => users.toArray()))
 })
 
-UserController.get('/count', (req, res, next) => {
-  r.table(User.table).count().run(rconn)
-  .then((count) => {
-    res.json(count)
-  }).error((error) => {
-    res.json(error)
-  }).finally(next)
+UserController.get('/count', async (req, res) => {
+  res.json(await r.table(User.table).count().run(rconn))
 })
 
-UserController.post('/create', async (req, res, next) => {
+UserController.post('/register', async (req, res) => {
   if (!validateUserData(req.body)) {
-    res.status(400).send('invalid user data')
-    next()
-    return
+    return res.status(400).json('invalid user data')
   }
 
   let newUser = new User(req.body)
 
   if (await existUserWithEmail(newUser.email)) {
-    res.status(400).send('user email already exists')
-    next()
-    return
+    return res.status(400).json('user email already exists')
   }
 
   if(await createUser(newUser)) {
-    res.send('user successfully created')
+    res.json('user successfully created')
   } else {
-    res.status(400).send('user creation failed')
+    return res.status(400).json('user creation failed')
   }
-  next()
 })
+
+UserController.post('/login', async (req, res) => {
+  let {email, password} = req.body
+
+  if (Joi.validate(email, User.schema.email).error === null &&
+      Joi.validate(password, User.schema.password).error === null
+    ) {
+    let user = await getUserWithEmail(email)
+    if (user.password == password) {
+      return res.json('login successful')
+    }
+  }
+  res.status(400).json('invalid login credentials')
+})
+
 
 function validateUserData(user) {
   return Joi.validate(user, User.schema).error === null
@@ -66,12 +65,17 @@ function validateUserData(user) {
 
 async function existUserWithEmail(email) {
   return await r.table(User.table)
-  .filter({email: email}).count().run(rconn)
+  .getAll(email, {index: 'email'}).count().run(rconn)
 }
 
 async function createUser(user) {
   return await r.table(User.table)
   .insert(user).run(rconn).then((result) => result.inserted)
+}
+
+async function getUserWithEmail(email) {
+  return await r.table(User.table)
+  .getAll(email, {index: 'email'}).run(rconn).then((users) => users.next())
 }
 
 export default UserController

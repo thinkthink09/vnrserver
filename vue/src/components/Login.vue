@@ -11,12 +11,12 @@
           <v-card class="elevation-12 mt-5 pa-3">
             <v-layout row wrap align-center>
               <v-flex xs2 text-lg-right>
-                <h3 class="pr-3">Account</h3>
+                <h3 class="pr-3">Email</h3>
               </v-flex>
               <v-flex xs12 sm10>
                 <v-text-field
-                  v-model="credentials.id"
-                  label="Name or Email"
+                  v-model="credentials.email"
+                  label="Your Email"
                   single-line
                   prepend-icon="person"
                 ></v-text-field>
@@ -66,7 +66,7 @@ export default {
   data () {
     return {
       credentials: {
-        id: 'testuser@vnr.com',
+        email: 'testuser@vnr.com',
         password: 'testuser1'
       },
       response: ''

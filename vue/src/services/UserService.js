@@ -5,8 +5,8 @@ const api = axios.create({
 })
 
 export default {
-  create (user) {
-    return api.post('create', user)
+  register (user) {
+    return api.post('register', user)
   },
   login (credentials) {
     return api.post('login', credentials)

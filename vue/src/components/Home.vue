@@ -2,7 +2,7 @@
   <v-container fluid grid-list-xl>
     <v-layout row justify-center>
       <v-flex xs10 sm8 md6 lg4>
-        <img src="@/assets/vnr-blacknwhite.svg" alt="" height="100%" width="100%">
+        <img src="@/assets/vnr-blacknwhite.svg">
       </v-flex>
     </v-layout>
     <v-layout row justify-center>
@@ -11,8 +11,8 @@
         <v-divider class="my-3"></v-divider>
         <div class="title mb-3">Very Nice Reusable Server!</div>
 
-        <router-link to="create-user" class="mt-1 btn btn--large">
-          <div class="btn__content">Create User</div>
+        <router-link to="register" class="mt-1 btn btn--large">
+          <div class="btn__content">sign up</div>
         </router-link>
       </v-flex>
     </v-layout>
