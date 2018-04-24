@@ -63,18 +63,18 @@ function validateUserData(user) {
   return Joi.validate(user, User.schema).error === null
 }
 
-async function existUserWithEmail(email) {
-  return await r.table(User.table)
+function existUserWithEmail(email) {
+  return r.table(User.table)
   .getAll(email, {index: 'email'}).count().run(rconn)
 }
 
-async function createUser(user) {
-  return await r.table(User.table)
+function createUser(user) {
+  return r.table(User.table)
   .insert(user).run(rconn).then((result) => result.inserted)
 }
 
-async function getUserWithEmail(email) {
-  return await r.table(User.table)
+function getUserWithEmail(email) {
+  return r.table(User.table)
   .getAll(email, {index: 'email'}).run(rconn).then((users) => users.next())
 }
 

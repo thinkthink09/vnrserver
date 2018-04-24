@@ -166,10 +166,10 @@ in app.js
       res.json(await getUserWithEmail(email))
     })
 ```
-the function `getUserWithEmail` need async as well
+the sample function `getUserWithEmail` returns a promise
 ```
-    async function getUserWithEmail(email) {
-      return await r.table(User.table)
+    function getUserWithEmail(email) {
+      return r.table(User.table)
       .getAll(email, {index: 'email'}).run(rconn).then((users) => users.next())
     }
 ```
@@ -179,4 +179,4 @@ npm install --save vuetify
 ```
 
 
-My current progress is https://youtu.be/xZMwg5z5VGk?t=14m13s
+My current progress is https://youtu.be/H6hM_5ilhqw?t=31m35s
