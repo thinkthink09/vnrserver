@@ -16,6 +16,20 @@ app.use(cors())
 
 routes(app)
 
+// 404 handler override
+app.use((req, res) => {
+  res.status(404)
+  res.json(`Cannot ${req.method} ${req.path}`)
+})
+
+// 500
+/* eslint-disable handle-callback-err */
+app.use((error, req, res, next) => {
+  res.status(500)
+  res.json('Sorry, the server hit an error 😢')
+})
+/* eslint-enable handle-callback-err */
+
 // function createRethinkConn (req, res, next) {
 //   console.log('create rethink connection')
 //   r.connect(config.rethinkdb).then((conn) => {

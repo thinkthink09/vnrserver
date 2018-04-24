@@ -29,12 +29,12 @@ UserController.get('/list', (req, res, next) => {
 })
 
 UserController.get('/count', (req, res, next) => {
- r.table(User.table).count().run(rconn)
- .then((count) => {
-   res.json(count)
- }).error((error) => {
-   res.json(error)
- }).finally(next)
+  r.table(User.table).count().run(rconn)
+  .then((count) => {
+    res.json(count)
+  }).error((error) => {
+    res.json(error)
+  }).finally(next)
 })
 
 UserController.post('/create', async (req, res, next) => {

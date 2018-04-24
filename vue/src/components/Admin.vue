@@ -30,7 +30,7 @@
               <v-flex xs12 sm10>
                 <v-text-field
                   v-model="user.email"
-                  label="Your Email"
+                  label="Your User Name Here"
                   single-line
                   prepend-icon="mail"
                   type="email"
@@ -45,7 +45,7 @@
               <v-flex xs12 sm10>
                 <v-text-field
                   v-model="user.password"
-                  label="Your Password"
+                  label="Your User Name Here"
                   single-line
                   prepend-icon="lock"
                   type="password"
@@ -77,7 +77,7 @@
 import UserService from '@/services/UserService'
 
 export default {
-  name: 'CreateUser',
+  name: 'Login',
   data () {
     let name = (+new Date()).toString(36)
     return {
@@ -90,7 +90,7 @@ export default {
     }
   },
   methods: {
-    async createUser () {
+    async login () {
       try {
         const response = await UserService.create(this.user)
         this.response = response.data
