@@ -52,14 +52,19 @@ UserController.post('/login', async (req, res) => {
   if (Joi.validate(email, User.schema.email).error === null &&
       Joi.validate(password, User.schema.password).error === null
     ) {
-    let user = await getUserWithEmail(email)
-    if (user.password == password) {
-      return res.json('login successful')
+    let users = await getUsersWithEmail(email)
+    if (users.length === 1) {
+      let user = new User(users[0])
+      if (user.checkPassword(password)) {
+        return res.json({
+          status: 'success',
+          token: signUser(user.data())
+        })
+      }
     }
   }
   res.status(400).json('invalid login credentials')
 })
-
 
 function validateUserData(user) {
   return Joi.validate(user, User.schema).error === null
@@ -71,14 +76,18 @@ function existUserWithEmail(email) {
 }
 
 function createUser(user) {
+  user.hashPassword()
   return r.table(User.table)
   .insert(user).run(rconn).then((result) => result.inserted)
 }
 
-function getUserWithEmail(email) {
+function getUsersWithEmail(email) {
   return r.table(User.table)
-  .getAll(email, {index: 'email'}).run(rconn).then((users) => users.next())
+  .getAll(email, {index: 'email'}).run(rconn).then((users) => users.toArray())
+}
+
 function signUser(user) {
+  console.log(`${user.name}<${user.email}> signed in ${Date.now()}`)
   return jwt.sign(user, config.jwt.secret, config.jwt.options)
 }
 

@@ -22,7 +22,7 @@ module.exports = {
   jwt: {
     secret: process.env.JWT_SECRET || 'very nice reuseable server', // secret key
     options: {
-      expiresIn: process.env.JWT_EXPIRE || 60 * 60 * 24 * 7 * 2 // two weeks
+      expiresIn: process.env.JWT_EXPIRE || '2 weeks' // two weeks
     }
   }
 }

@@ -1,10 +1,28 @@
 import Joi from 'joi'
+import bcrypt from 'bcrypt-nodejs'
 
 class User {
   constructor({name, email, password}) {
     this.name = name
     this.email = email
     this.password = password
+  }
+
+  data() {
+    return {
+      name: this.name,
+      email: this.email,
+      password: this.password
+    }
+  }
+
+  hashPassword() {
+    // let salt = bcrypt.genSaltSync()
+    this.password = bcrypt.hashSync(this.password, null)
+  }
+
+  checkPassword(password) {
+    return bcrypt.compareSync(password, this.password)
   }
 }
 
