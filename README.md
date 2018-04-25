@@ -177,6 +177,19 @@ the sample function `getUserWithEmail` returns a promise
 ```
 npm install --save vuetify
 ```
+17. session storage:
+
+first, we need jsonwebtoken
+```
+npm install --save jsonwebtoken
+```
+when signing a user token
+```
+jwt.sign(user, 'secret key', {expiresIn: 60*60*24*7})
+```
+this returns the token for signed user tokens
+
+18. 
 
 
 My current progress is https://youtu.be/H6hM_5ilhqw?t=31m35s

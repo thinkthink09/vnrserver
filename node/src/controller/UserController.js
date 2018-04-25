@@ -1,6 +1,8 @@
 import express from 'express'
 import r from 'rethinkdb'
 import Joi from 'joi'
+import jwt from 'jsonwebtoken'
+import config from '../config/config'
 import User from '../model/User'
 
 let rconn = null
@@ -76,6 +78,8 @@ function createUser(user) {
 function getUserWithEmail(email) {
   return r.table(User.table)
   .getAll(email, {index: 'email'}).run(rconn).then((users) => users.next())
+function signUser(user) {
+  return jwt.sign(user, config.jwt.secret, config.jwt.options)
 }
 
 export default UserController
