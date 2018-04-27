@@ -49,7 +49,7 @@
           </v-card>
           <v-layout row wrap>
             <v-flex>
-              <h3 class="text-xs-center mt-4">{{response}}</h3>
+              <h3 class="text-xs-center mt-4">{{alert}}</h3>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -69,20 +69,17 @@ export default {
         email: 'testuser@vnr.com',
         password: 'testuser1'
       },
-      response: ''
+      alert: ''
     }
   },
   methods: {
     async login () {
       try {
         const response = await UserService.login(this.credentials)
-        if (response.status === 'success') {
-          this.response = 'Logged in'
-        } else {
-          this.response = response.message
-        }
+        this.alert = 'login successful'
+        this.$store.dispatch('login', response.data)
       } catch (error) {
-        this.response = error.response.data
+        this.alert = error.response.data
       }
     }
   }

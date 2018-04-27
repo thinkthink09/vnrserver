@@ -11,8 +11,7 @@ class User {
   data() {
     return {
       name: this.name,
-      email: this.email,
-      password: this.password
+      email: this.email
     }
   }
 

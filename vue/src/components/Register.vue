@@ -64,7 +64,7 @@
           </v-card>
           <v-layout row wrap>
             <v-flex>
-              <h3 class="text-xs-center mt-4">{{response}}</h3>
+              <h3 class="text-xs-center mt-4">{{alert}}</h3>
             </v-flex>
           </v-layout>
         </v-flex>
@@ -86,16 +86,17 @@ export default {
         email: name + '@vnr.com',
         password: name
       },
-      response: ''
+      alert: ''
     }
   },
   methods: {
     async register () {
       try {
         const response = await UserService.register(this.user)
-        this.response = response.data
+        this.alert = 'user successfully created'
+        this.$store.dispatch('login', response.data)
       } catch (error) {
-        this.response = error.response.data
+        this.alert = error.response.data
       }
     }
   }

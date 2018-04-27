@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     token: null,
     user: null
   },
-  mutation: {
+  mutations: {
     setToken (state, token) {
       state.token = token
     },

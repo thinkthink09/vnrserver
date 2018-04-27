@@ -33,23 +33,22 @@ UserController.get('/count', async (req, res) => {
 
 UserController.post('/register', async (req, res) => {
   if (!validateUserData(req.body)) {
-    return res.status(400).json({status: 'error', message: 'invalid user data'})
+    return res.status(400).json('invalid user data')
   }
 
   let newUser = new User(req.body)
 
   if (await existUserWithEmail(newUser.email)) {
-    return res.status(400).json({status: 'error', message: 'user email already exists'})
+    return res.status(400).json('user email already exists')
   }
 
   if(await createUser(newUser)) {
     return res.json({
-      status: 'success',
-      message: 'User registered successfully'
-      token: signUser(user.data())
+      token: signUser(newUser.data()),
+      user: newUser.data()
     })
   } else {
-    return res.status(400).json({status: 'error', message: 'user creation failed'})
+    return res.status(400).json('user creation failed')
   }
 })
 
@@ -64,9 +63,8 @@ UserController.post('/login', async (req, res) => {
       let user = new User(users[0])
       if (user.checkPassword(password)) {
         return res.json({
-          status: 'success',
-          message: 'User logged in successfully'
-          token: signUser(user.data())
+          token: signUser(user.data()),
+          user: user.data()
         })
       }
     } else {
