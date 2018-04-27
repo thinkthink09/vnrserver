@@ -11,8 +11,35 @@
       </router-link>
       <v-toolbar-title pointer @click="routeTo('/')">VNR Server</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-title>Hello World</v-toolbar-title>
-      <v-toolbar-side-icon @click="routeTo('login')"></v-toolbar-side-icon>
+      <v-toolbar-title
+        pointer
+        class="mr-3"
+        v-if="$store.state.user === null"
+        @click="routeTo('register')"
+      >
+        Register
+      </v-toolbar-title>
+
+      <v-toolbar-title
+        pointer
+        class="mr-3"
+        v-if="$store.state.user === null"
+        @click="routeTo('login')"
+      >
+        Login
+      </v-toolbar-title>
+
+      <v-toolbar-title
+        pointer
+        class="mr-3"
+        v-if="$store.state.user !== null"
+      >
+        Welcome, {{$store.state.user.name}}!
+      </v-toolbar-title>
+      <v-toolbar-side-icon
+        @click="routeTo('login')"
+        v-if="$store.state.user !== null"
+      ></v-toolbar-side-icon>
     </v-toolbar>
     <v-content>
       <v-container fluid>
