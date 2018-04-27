@@ -189,7 +189,16 @@ jwt.sign(user, 'secret key', {expiresIn: 60*60*24*7})
 ```
 this returns the token for signed user tokens
 
-18. 
+18. we install vuex for flux flow, this is similar to redux
+```
+npm i --save vuex vuex-router-sync
+```
+in vue main.js, we add vuex-router-sync
+```
+import { sync } from 'vuex-router-sync'
+import store from './store/store'
+sync(store, router)
+```
 
 
 My current progress is https://youtu.be/H6hM_5ilhqw?t=31m35s

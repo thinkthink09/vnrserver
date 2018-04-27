@@ -76,7 +76,11 @@ export default {
     async login () {
       try {
         const response = await UserService.login(this.credentials)
-        this.response = response.data
+        if (response.status === 'success') {
+          this.response = 'Logged in'
+        } else {
+          this.response = response.message
+        }
       } catch (error) {
         this.response = error.response.data
       }

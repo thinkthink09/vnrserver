@@ -1,9 +1,12 @@
 import express from 'express'
 import r from 'rethinkdb'
-import Joi from 'joi'
 import jwt from 'jsonwebtoken'
+import Joi from 'joi'
 import config from '../config/config'
 import User from '../model/User'
+import {
+  sleep
+} from '../utility/common'
 
 let rconn = null
 const UserController = express.Router()
@@ -30,19 +33,23 @@ UserController.get('/count', async (req, res) => {
 
 UserController.post('/register', async (req, res) => {
   if (!validateUserData(req.body)) {
-    return res.status(400).json('invalid user data')
+    return res.status(400).json({status: 'error', message: 'invalid user data'})
   }
 
   let newUser = new User(req.body)
 
   if (await existUserWithEmail(newUser.email)) {
-    return res.status(400).json('user email already exists')
+    return res.status(400).json({status: 'error', message: 'user email already exists'})
   }
 
   if(await createUser(newUser)) {
-    res.json('user successfully created')
+    return res.json({
+      status: 'success',
+      message: 'User registered successfully'
+      token: signUser(user.data())
+    })
   } else {
-    return res.status(400).json('user creation failed')
+    return res.status(400).json({status: 'error', message: 'user creation failed'})
   }
 })
 
@@ -58,9 +65,13 @@ UserController.post('/login', async (req, res) => {
       if (user.checkPassword(password)) {
         return res.json({
           status: 'success',
+          message: 'User logged in successfully'
           token: signUser(user.data())
         })
       }
+    } else {
+      //mock password check to prevent timing attack
+      await sleep(Math.random() * 80 + 180)
     }
   }
   res.status(400).json('invalid login credentials')
