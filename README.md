@@ -229,4 +229,4 @@ here's how to setup both environments:
     ```
 19. session
 
-My current progress is https://www.youtube.com/watch?v=1NSPAz1Qc-I
+My current progress is https://youtu.be/1NSPAz1Qc-I?t=38m3s

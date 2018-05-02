@@ -32,8 +32,7 @@ export default {
     }
   },
   async mounted () {
-    let res = await UserService.getUsers()
-    this.users = res['data']
+    this.users = (await UserService.getUsers()).data
   },
   components: {
     Card
