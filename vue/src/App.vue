@@ -36,8 +36,18 @@
       >
         Welcome, {{$store.state.user.name}}!
       </v-toolbar-title>
+
+      <v-toolbar-title
+        pointer
+        class="mr-3"
+        v-if="$store.state.user !== null"
+        @click="logout"
+      >
+        Logout
+      </v-toolbar-title>
+
       <v-toolbar-side-icon
-        @click="routeTo('login')"
+        @click="routeTo('admin')"
         v-if="$store.state.user !== null"
       ></v-toolbar-side-icon>
     </v-toolbar>
@@ -55,6 +65,10 @@ export default {
   methods: {
     routeTo (path) {
       this.$router.push({path: path})
+    },
+    logout () {
+      this.$store.dispatch('logout')
+      this.routeTo('/')
     }
   }
 }

@@ -11,7 +11,11 @@
         <v-divider class="my-3"></v-divider>
         <div class="title mb-3">Very Nice Reusable Server!</div>
 
-        <router-link to="register" class="mt-1 btn btn--large">
+        <router-link
+          v-if="$store.state.user === null"
+          to="register"
+          class="mt-1 btn btn--large"
+        >
           <div class="btn__content">sign up</div>
         </router-link>
       </v-flex>

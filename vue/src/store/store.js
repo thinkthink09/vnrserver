@@ -21,6 +21,10 @@ const store = new Vuex.Store({
     login ({commit}, res) {
       commit('setToken', res.token)
       commit('setUser', res.user)
+    },
+    logout ({commit}) {
+      commit('setToken', null)
+      commit('setUser', null)
     }
   }
 })

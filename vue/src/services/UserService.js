@@ -10,5 +10,11 @@ export default {
   },
   login (credentials) {
     return api.post('login', credentials)
+  },
+  getUsers () {
+    return api.get('list')
+  },
+  getUserCount () {
+    return api.get('count')
   }
 }
