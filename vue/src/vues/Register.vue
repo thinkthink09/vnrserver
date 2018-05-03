@@ -8,6 +8,8 @@
         <v-text-field
           v-model="user.name"
           label="Your User Name Here"
+          required
+          :rules="[rules.name]"
           single-line
           prepend-icon="person"
         ></v-text-field>
@@ -22,6 +24,8 @@
         <v-text-field
           v-model="user.email"
           label="Your Email"
+          required
+          :rules="[rules.email]"
           single-line
           prepend-icon="mail"
           type="email"
@@ -37,6 +41,8 @@
         <v-text-field
           v-model="user.password"
           label="Your Password"
+          required
+          :rules="[rules.password]"
           single-line
           prepend-icon="lock"
           type="password"
@@ -74,7 +80,20 @@ export default {
         email: name + '@vnr.com',
         password: name
       },
-      alert: ''
+      alert: '',
+      rules: {
+        name: (val) => {
+          return /[a-z0-9]{3,30}/.test(val) ||
+          'User Name must consist of 3 - 30 alphanumeric characters'
+        },
+        email: (val) => {
+          return /[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*/.test(val) ||
+          'Email format incorrect'
+        },
+        password: (val) => {
+          return /.{3,30}/.test(val) || 'Password mush be 3 to 30 characters long'
+        }
+      }
     }
   },
   methods: {
