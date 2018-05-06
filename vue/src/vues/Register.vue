@@ -102,7 +102,7 @@ export default {
         const response = await UserService.register(this.user)
         this.alert = 'user successfully created'
         this.$store.dispatch('login', response.data)
-        this.$router.push({path: 'admin'})
+        this.$router.push({path: '/admin'})
       } catch (error) {
         this.alert = error.response.data
       }

@@ -15,7 +15,7 @@
         pointer
         class="mr-3"
         v-if="$store.state.user === null"
-        @click="routeTo('register')"
+        @click="routeTo('/register')"
       >
         Register
       </v-toolbar-title>
@@ -24,7 +24,7 @@
         pointer
         class="mr-3"
         v-if="$store.state.user === null"
-        @click="routeTo('login')"
+        @click="routeTo('/login')"
       >
         Login
       </v-toolbar-title>
@@ -47,7 +47,7 @@
       </v-toolbar-title>
 
       <v-toolbar-side-icon
-        @click="routeTo('admin')"
+        @click="routeTo('/admin')"
         v-if="$store.state.user !== null"
       ></v-toolbar-side-icon>
     </v-toolbar>

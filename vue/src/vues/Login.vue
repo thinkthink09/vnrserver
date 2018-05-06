@@ -67,7 +67,7 @@ export default {
         const response = await UserService.login(this.credentials)
         this.alert = 'login successful'
         this.$store.dispatch('login', response.data)
-        this.$router.push({path: 'admin'})
+        this.$router.push({path: '/admin'})
       } catch (error) {
         this.alert = error.response.data
       }

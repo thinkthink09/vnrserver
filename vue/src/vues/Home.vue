@@ -13,7 +13,7 @@
 
         <router-link
           v-if="$store.state.user === null"
-          to="register"
+          to="/register"
           class="mt-1 btn btn--large"
         >
           <div class="btn__content">sign up</div>
