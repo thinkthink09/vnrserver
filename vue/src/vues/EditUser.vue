@@ -104,11 +104,19 @@ export default {
     async update () {
       try {
         const response = await UserService.updateUser(this.user)
-        this.user = response.data.user
-        this.user.password = this.user.name
+        let temp = this.user.password
+        this.user = response.data
+        this.user.password = temp
+        if (this.user.id === this.$store.state.user.id) {
+          this.$store.dispatch('editAccount', this.user)
+        }
         this.alert = 'user successfully updated'
       } catch (error) {
-        this.alert = error.response.data
+        if (error.response) {
+          this.alert = error.response.data
+        } else {
+          this.alert = 'an error occurred'
+        }
       }
     }
   },

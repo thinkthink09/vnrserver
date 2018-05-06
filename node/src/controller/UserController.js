@@ -95,10 +95,7 @@ UserController.post('/update', async (req, res) => {
   }
 
   if (await updateUser(newUser)) {
-    return res.json({
-      token: signUser(newUser.data()),
-      user: newUser.data()
-    })
+    return res.json(newUser.data())
   } else {
     return res.status(400).json('update user failed')
   }

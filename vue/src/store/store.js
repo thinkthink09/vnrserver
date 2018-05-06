@@ -25,6 +25,9 @@ const store = new Vuex.Store({
     logout ({commit}) {
       commit('setToken', null)
       commit('setUser', null)
+    },
+    editAccount ({commit}, user) {
+      commit('setUser', user)
     }
   }
 })
