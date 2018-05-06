@@ -11,6 +11,15 @@ export default {
   login (credentials) {
     return api.post('login', credentials)
   },
+  getUser (userId) {
+    return api.get(`get/${userId}`)
+  },
+  deleteUser (userId) {
+    return api.delete(`delete/${userId}`)
+  },
+  updateUser (user) {
+    return api.post('update', user)
+  },
   getUsers () {
     return api.get('list')
   },

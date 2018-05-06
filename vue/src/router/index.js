@@ -4,6 +4,7 @@ import Home from '@/vues/Home'
 import Register from '@/vues/Register'
 import Login from '@/vues/Login'
 import Admin from '@/vues/Admin'
+import EditUser from '@/vues/EditUser'
 
 Vue.use(Router)
 
@@ -25,6 +26,10 @@ export default new Router({
       path: '/admin',
       name: 'Admin',
       component: Admin
+    }, {
+      path: '/edit-user/:userId',
+      name: 'EditUser',
+      component: EditUser
     }
   ]
 })

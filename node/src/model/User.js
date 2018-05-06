@@ -2,7 +2,8 @@ import Joi from 'joi'
 import bcrypt from 'bcrypt-nodejs'
 
 class User {
-  constructor({name, email, password}) {
+  constructor({id, name, email, password}) {
+    this.id = id
     this.name = name
     this.email = email
     this.password = password
@@ -10,6 +11,7 @@ class User {
 
   data() {
     return {
+      id: this.id,
       name: this.name,
       email: this.email
     }
@@ -26,6 +28,7 @@ class User {
 }
 
 User.schema = {
+  id: Joi.string(),
   name: Joi.string().alphanum().min(3).max(30).required(),
   email: Joi.string().email(),
   password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/)

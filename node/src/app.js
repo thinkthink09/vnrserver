@@ -30,20 +30,22 @@ app.use((error, req, res, next) => {
 })
 /* eslint-enable handle-callback-err */
 
-// function createRethinkConn (req, res, next) {
-//   console.log('create rethink connection')
-//   r.connect(config.rethinkdb).then((conn) => {
-//     req.rethinkConn = conn
-//     next()
-//   }).error((error) => {
-//     res.send(500, { error: error.message })
-//   })
-// }
-//
-// function closeRethinkConn (req, res, next) {
-//   console.log('close rethink connection')
-//   req.rethinkConn.close()
-// }
+/* eslint-disable no-console */
+function createRethinkConn (req, res, next) {
+  console.log('create rethink connection')
+  r.connect(config.rethinkdb).then((conn) => {
+    req.rethinkConn = conn
+    next()
+  }).error((error) => {
+    res.send(500, { error: error.message })
+  })
+}
+
+function closeRethinkConn (req, res, next) {
+  console.log('close rethink connection')
+  req.rethinkConn.close()
+}
+/* eslint-enable no-console */
 
 function start () {
   app.listen(config.port, () => {
@@ -58,8 +60,8 @@ if (config.sequelize) {
   sequelize.sync().then(start)
 } else if (config.rethinkdb) {
   // starting server with rethink
-  // app.use(createRethinkConn)
-  // app.use(closeRethinkConn)
+  app.use(createRethinkConn)
+  app.use(closeRethinkConn)
 
   r.connect(config.rethinkdb).then((conn) => {
     app.rethinkConn = conn

@@ -31,6 +31,13 @@ UserController.get('/count', async (req, res) => {
   res.json(await r.table(User.table).count().run(rconn))
 })
 
+UserController.get('/get/:id', async (req, res) => {
+  if (!req.params.id) {
+    return res.status(400).json('invalid request id')
+  }
+  res.json(await getUser(req.params.id))
+})
+
 UserController.post('/register', async (req, res) => {
   if (!validateUserData(req.body)) {
     return res.status(400).json('invalid user data')
@@ -42,7 +49,7 @@ UserController.post('/register', async (req, res) => {
     return res.status(400).json('user email already exists')
   }
 
-  if(await createUser(newUser)) {
+  if (await createUser(newUser)) {
     return res.json({
       token: signUser(newUser.data()),
       user: newUser.data()
@@ -75,6 +82,28 @@ UserController.post('/login', async (req, res) => {
   res.status(400).json('invalid login credentials')
 })
 
+UserController.post('/update', async (req, res) => {
+  if (!req.body.id || !validateUserData(req.body)) {
+    return res.status(400).json('invalid user data')
+  }
+
+  let newUser = new User(req.body)
+  let oldUser = await getUser(req.body.id)
+
+  if (newUser.email !== oldUser.email && await existUserWithEmail(newUser.email)) {
+    return res.status(400).json('user email already exists')
+  }
+
+  if (await updateUser(newUser)) {
+    return res.json({
+      token: signUser(newUser.data()),
+      user: newUser.data()
+    })
+  } else {
+    return res.status(400).json('update user failed')
+  }
+})
+
 function validateUserData(user) {
   return Joi.validate(user, User.schema).error === null
 }
@@ -84,15 +113,25 @@ function existUserWithEmail(email) {
   .getAll(email, {index: 'email'}).count().run(rconn)
 }
 
+function getUser(id) {
+  return r.table(User.table).get(id).run(rconn)
+}
+
+function getUsersWithEmail(email) {
+  return r.table(User.table)
+  .getAll(email, {index: 'email'}).run(rconn).then((users) => users.toArray())
+}
+
 function createUser(user) {
   user.hashPassword()
   return r.table(User.table)
   .insert(user).run(rconn).then((result) => result.inserted)
 }
 
-function getUsersWithEmail(email) {
-  return r.table(User.table)
-  .getAll(email, {index: 'email'}).run(rconn).then((users) => users.toArray())
+function updateUser(user) {
+  user.hashPassword()
+  return r.table(User.table).get(user.id)
+  .update(user).run(rconn).then((result) => result.replaced)
 }
 
 function signUser(user) {
