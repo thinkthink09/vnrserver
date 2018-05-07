@@ -39,6 +39,9 @@ export default {
     }
   },
   async mounted () {
+    if (this.$store.state.user === null) {
+      return
+    }
     this.users = (await UserService.getUsers()).data
   },
   methods: {

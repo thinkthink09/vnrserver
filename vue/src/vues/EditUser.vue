@@ -97,6 +97,9 @@ export default {
     }
   },
   async mounted () {
+    if (this.$store.state.user === null) {
+      return
+    }
     this.user = (await UserService.getUser(this.$store.state.route.params.userId)).data
     this.user.password = this.user.name
   },

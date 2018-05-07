@@ -227,6 +227,43 @@ here's how to setup both environments:
     ```
     this.$store.dispatch
     ```
-19. session
+19. allowing Vuex to have persistent state:
+    ```
+    npm i vuex-persistedstate
+    ```
+    in store.js:
+    ```
+    import createPersistedState from 'vuex-persistedstate'
+
+    const store = new Vuex.Store({
+        // ...
+        plugins: [createPersistedState()]
+    })
+    ```
+20. url param, please look at part 6 https://www.youtube.com/watch?v=ipYlztBRpp0
+    ```
+    export default {
+      ...,
+      watch: {
+        [field] (value) {
+          const route = {
+            name: [this route name]
+          }
+          if (this.[field] !== '') {
+            route.query = {
+              [field]: this.[field]
+            }
+          }
+          this.$router.push(route)
+        },
+        '$router.query.[field]': {
+          immediate: true,
+          handler (value) {
+            this.[field] = value
+          }
+        }
+      }
+    }
+    ```
 
 My current progress is https://youtu.be/1NSPAz1Qc-I?t=38m3s
