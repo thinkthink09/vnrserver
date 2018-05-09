@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import Joi from 'joi'
 import config from '../config/config'
 import User from '../model/User'
+import { AuthenticateUser } from './middleware/UserAuthenticator'
 import {
   sleep
 } from '../utility/common'
@@ -23,7 +24,7 @@ UserController.use((req, res, next) => {
 /**
  * TODO should remove this when doing real world things
  */
-UserController.get('/list', async (req, res) => {
+UserController.get('/list', AuthenticateUser, async (req, res) => {
   res.json(await r.table(User.table).run(rconn).then((users) => users.toArray()))
 })
 
@@ -31,7 +32,7 @@ UserController.get('/count', async (req, res) => {
   res.json(await r.table(User.table).count().run(rconn))
 })
 
-UserController.get('/get/:id', async (req, res) => {
+UserController.get('/get/:id', AuthenticateUser, async (req, res) => {
   if (!req.params.id) {
     return res.status(400).json('invalid request id')
   }
@@ -82,7 +83,7 @@ UserController.post('/login', async (req, res) => {
   res.status(400).json('invalid login credentials')
 })
 
-UserController.post('/update', async (req, res) => {
+UserController.post('/update', AuthenticateUser, async (req, res) => {
   if (!req.body.id || !validateUserData(req.body)) {
     return res.status(400).json('invalid user data')
   }

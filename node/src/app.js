@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 // import morgan from 'morgan'
 import cors from 'cors'
 import r from 'rethinkdb'
+import passport from 'passport'
 import config from './config/config'
 import { sequelize } from './model/.models'
 import routes from './controller/.routes'
@@ -13,6 +14,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
+app.use(passport.initialize())
 
 routes(app)
 

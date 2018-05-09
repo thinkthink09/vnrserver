@@ -265,5 +265,48 @@ here's how to setup both environments:
       }
     }
     ```
+21. using jwt (Json Web Token), or something similar to session, we install on server
+    ```
+    npm install --save passport passport-jwt
+    ```
+    in app.js:
+    ```
+    import passport from 'passport'
+    ...
+    app.use(passport.initialize())
+    ```
+    and for vnrserver, we create a UserAuthenticator middleware:
+    ```
+    import passport from 'passport'
+    import {Strategy, ExtractJwt} from 'passport-jwt'
+    ...
 
-My current progress is https://youtu.be/1NSPAz1Qc-I?t=38m3s
+    passport.use(
+        new Strategy({
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            secretOrKey: ${secret}
+        },
+        async (jwt_payload, next) => {
+            try {
+                // validate jwt_payload is a user
+                next(null, user)
+
+            } catch (err) {
+                next(new Error(err.message), false)
+            }
+        })
+    )
+
+    export function AuthenticateUser (req, res, next) {\
+        passport.authenticate('jwt', (err, user) => {
+            if (err || !user) {
+                res.status(403)
+                return res.json('api access forbidden')
+            }
+            req.user = user
+            next()
+        })(req, res, next)
+    }
+    ...
+    ```
+22. testing:

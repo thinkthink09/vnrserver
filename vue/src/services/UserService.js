@@ -1,7 +1,11 @@
 import axios from 'axios'
+import $store from '@/store/store'
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/user/'
+  baseURL: 'http://localhost:3000/user/',
+  headers: {
+    Authorization: `Bearer ${$store.state.token}`
+  }
 })
 
 export default {
