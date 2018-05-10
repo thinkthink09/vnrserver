@@ -46,39 +46,47 @@ here's how to setup both environments:
     ```
     npm install -g vue-cli
     ```
+
 3.  setup webpack project with folder name vue
     ```
     vue init webpack vue
     ```
+
 4.  ask vue init to run npm install, or run it yourself
     ```
     cd vue;
     npm install;
     cd ..;
     ```
+
 5.  setup the backend, make a folder called node and init npm in it
     ```
     mkdir node;
     cd node;
     npm init;
     ```
+
 6.  install nodemon, eslint
     ```
     npm install --save nodemon eslint
     ```
+
 7.  configure eslint
     ```
     ./node_modules/.bin/eslint --init
     ```
+
 8.  install express and other tools
     ```
     npm install --save express cors morgan body-parser
     ```
+
 9.  install babel to be able to compile es7
     ```
     npm install --save-dev babel-cli
     npm install --save-dev babel-preset-env
     ```
+
 10. setup package.json, setup these scripts:
     ```
     "scripts": {
@@ -88,6 +96,7 @@ here's how to setup both environments:
       "lint": "./node_modules/.bin/eslint **/*.js"
     }
     ```
+
 11. setup eslint, install the extensions
     ```
     npm install --save-dev eslint-config-airbnb-base eslint-config-standard eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
@@ -101,6 +110,7 @@ here's how to setup both environments:
       ]
     }
     ```
+
 12. use axios for http requests from frontend
     ```
     npm install --save axios
@@ -139,7 +149,7 @@ here's how to setup both environments:
     sequelize.sync().then(startServer)
     ...
     ```
-    in config file
+    in config file:
     ```
     db: {
       database: process.env.DB_NAME,
@@ -151,6 +161,7 @@ here's how to setup both environments:
       }
     }
     ```
+
 14. to set up rethinkdb, install by
     ```
     npm install --save rethinkdb
@@ -171,6 +182,7 @@ here's how to setup both environments:
       app.rethinkConn = conn
     }).then(startServer)
     ```
+
 15. using rethinkdb, you need to async/await a lot
     ```
     UserController.post('/get-user', async (req, res) => {
@@ -184,10 +196,12 @@ here's how to setup both environments:
       .getAll(email, {index: 'email'}).run(rconn).then((users) => users.next())
     }
     ```
+
 16. add vuetify in vue
     ```
     npm install --save vuetify
     ```
+
 17. session storage:
 
       first, we need jsonwebtoken
@@ -227,6 +241,7 @@ here's how to setup both environments:
     ```
     this.$store.dispatch
     ```
+
 19. allowing Vuex to have persistent state:
     ```
     npm i vuex-persistedstate
@@ -240,6 +255,7 @@ here's how to setup both environments:
         plugins: [createPersistedState()]
     })
     ```
+
 20. url param, please look at part 6 https://www.youtube.com/watch?v=ipYlztBRpp0
     ```
     export default {
@@ -265,6 +281,7 @@ here's how to setup both environments:
       }
     }
     ```
+
 21. using jwt (Json Web Token), or something similar to session, we install on server
     ```
     npm install --save passport passport-jwt
@@ -309,4 +326,24 @@ here's how to setup both environments:
     }
     ...
     ```
-22. testing:
+
+22. db connection pooling, we use rethinkdbdash
+    ```
+    npm install --save rethinkdbdash
+    ```
+    we add a connector file, or in vnrserver, we call it rethinkdbPool.js
+    ```
+    import rethinkdbdash from 'rethinkdbdash'
+    import config from './config/config'
+
+    const r = rethinkdbdash(config.rethinkdbdash)
+
+    module.exports = r
+    ```
+    we replace all `import r from 'rethinkdb'` to
+    ```
+    import r from '${path to rethinkdbPool.js}'
+    ```
+    we don't need to do `run(conn)` or `.then((users) => users.toArray()))` anymore.
+
+23. testing:
