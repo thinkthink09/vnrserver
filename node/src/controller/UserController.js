@@ -1,5 +1,5 @@
 import express from 'express'
-import r from 'rethinkdb'
+import r from '../rethinkdbPool'
 import jwt from 'jsonwebtoken'
 import Joi from 'joi'
 import config from '../config/config'
@@ -9,12 +9,10 @@ import {
   sleep
 } from '../utility/common'
 
-let rconn = null
 const UserController = express.Router()
 
 UserController.use((req, res, next) => {
   const start = Date.now()
-  rconn = req.app.rethinkConn
   res.once('finish', () => {
     console.log('UserController', req.method, req.url, `elapsed: ${Date.now() - start}ms`)
   })
@@ -25,11 +23,11 @@ UserController.use((req, res, next) => {
  * TODO should remove this when doing real world things
  */
 UserController.get('/list', AuthenticateUser, async (req, res) => {
-  res.json(await r.table(User.table).run(rconn).then((users) => users.toArray()))
+  res.json(await r.table(User.table))
 })
 
 UserController.get('/count', async (req, res) => {
-  res.json(await r.table(User.table).count().run(rconn))
+  res.json(await r.table(User.table).count())
 })
 
 UserController.get('/get/:id', AuthenticateUser, async (req, res) => {
@@ -108,28 +106,28 @@ function validateUserData(user) {
 
 function existUserWithEmail(email) {
   return r.table(User.table)
-  .getAll(email, {index: 'email'}).count().run(rconn)
+  .getAll(email, {index: 'email'}).count()
 }
 
 function getUser(id) {
-  return r.table(User.table).get(id).run(rconn)
+  return r.table(User.table).get(id)
 }
 
 function getUsersWithEmail(email) {
   return r.table(User.table)
-  .getAll(email, {index: 'email'}).run(rconn).then((users) => users.toArray())
+  .getAll(email, {index: 'email'})
 }
 
 function createUser(user) {
   user.hashPassword()
   return r.table(User.table)
-  .insert(user).run(rconn).then((result) => result.inserted)
+  .insert(user).then((result) => result.inserted)
 }
 
 function updateUser(user) {
   user.hashPassword()
   return r.table(User.table).get(user.id)
-  .update(user).run(rconn).then((result) => result.replaced)
+  .update(user).then((result) => result.replaced)
 }
 
 function signUser(user) {

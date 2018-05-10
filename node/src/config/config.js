@@ -11,13 +11,24 @@ module.exports = {
       host: process.env.DB_HOST
     }
   },
-  */
   rethinkdb: {
     host: process.env.DB_HOST || 'ec2-54-149-69-99.us-west-2.compute.amazonaws.com',
     port: process.env.DB_PORT || 28015,
     db: process.env.DB_NAME || 'Training',
     user: process.env.DB_USER || 'rethinkdb',
     password: process.env.DB_PASS || 'rethinkdb'
+  },
+  */
+  rethinkdbdash: {
+    db: process.env.DB_NAME || 'Training',
+    user: process.env.DB_USER || 'rethinkdb',
+    password: process.env.DB_PASS || 'rethinkdb',
+    servers: [
+      {
+        host: process.env.DB_HOST || 'ec2-54-149-69-99.us-west-2.compute.amazonaws.com',
+        port: process.env.DB_PORT || 28015
+      }
+    ]
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'very nice reuseable server', // secret key

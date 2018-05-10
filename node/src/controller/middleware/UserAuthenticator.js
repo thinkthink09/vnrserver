@@ -1,11 +1,9 @@
 import passport from 'passport'
 import {Strategy, ExtractJwt} from 'passport-jwt'
-import r from 'rethinkdb'
+import r from '../../rethinkdbPool'
 import Joi from 'joi'
 import config from '../../config/config'
 import User from '../../model/User'
-
-let rconn = null
 
 passport.use(
   new Strategy({
@@ -14,7 +12,6 @@ passport.use(
   },
   async (jwt_payload, next) => {
     try {
-      console.log('payload received', jwt_payload)
       if (!jwt_payload.id ||
           Joi.validate(jwt_payload.name, User.schema.name).error !== null ||
           Joi.validate(jwt_payload.email, User.schema.email).error !== null
@@ -26,13 +23,13 @@ passport.use(
       next(null, user)
 
     } catch (err) {
+      console.log('invalid payload received', jwt_payload)
       next(new Error(err.message), false)
     }
   })
 )
 
 export function AuthenticateUser (req, res, next) {
-  rconn = req.app.rethinkConn
   passport.authenticate('jwt', (err, user) => {
     if (err || !user) {
       res.status(403)
@@ -44,5 +41,5 @@ export function AuthenticateUser (req, res, next) {
 }
 
 function getUser(id) {
-  return r.table(User.table).get(id).run(rconn)
+  return r.table(User.table).get(id)
 }
