@@ -101,6 +101,7 @@ here's how to setup both environments:
     ```
     npm install --save-dev eslint-config-airbnb-base eslint-config-standard eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
     ```
+
     in .eslintrc.js
     ```
     module.exports = {
@@ -115,10 +116,12 @@ here's how to setup both environments:
     ```
     npm install --save axios
     ```
+
     then do
     ```
     axios.get('/user', {id: 123})
     ```
+
     to send a get requests
 
 13. to setup sequelize
@@ -142,6 +145,7 @@ here's how to setup both environments:
 
     module.exports = db
     ```
+
     in app.js
     ```
     import { sequelize } from './model/models'
@@ -149,6 +153,7 @@ here's how to setup both environments:
     sequelize.sync().then(startServer)
     ...
     ```
+
     in config file:
     ```
     db: {
@@ -166,6 +171,7 @@ here's how to setup both environments:
     ```
     npm install --save rethinkdb
     ```
+
     in config file
     ```
     rethinkdb: {
@@ -176,6 +182,7 @@ here's how to setup both environments:
       password: process.env.DB_PASS
     }
     ```
+
     in app.js
     ```
     r.connect(config.rethinkdb).then((conn) => {
@@ -189,6 +196,7 @@ here's how to setup both environments:
       res.json(await getUserWithEmail(email))
     })
     ```
+
     the sample function `getUserWithEmail` returns a promise
     ```
     function getUserWithEmail(email) {
@@ -208,16 +216,19 @@ here's how to setup both environments:
     ```
     npm install --save jsonwebtoken
     ```
+
     when signing a user token
     ```
     jwt.sign(user, 'secret key', {expiresIn: 60*60*24*7})
     ```
+
     this returns the token for signed user tokens
 
 18. we install vuex for flux flow, this is similar to redux
     ```
     npm i --save vuex vuex-router-sync
     ```
+
     in vue main.js, we add vuex-router-sync
     ```
     import { sync } from 'vuex-router-sync'
@@ -233,10 +244,12 @@ here's how to setup both environments:
       template: '<App/>'
     })
     ```
+
     and through out vue components, you can use
     ```
     this.$store.state
     ```
+
     or
     ```
     this.$store.dispatch
@@ -246,6 +259,7 @@ here's how to setup both environments:
     ```
     npm i vuex-persistedstate
     ```
+
     in store.js:
     ```
     import createPersistedState from 'vuex-persistedstate'
@@ -286,12 +300,14 @@ here's how to setup both environments:
     ```
     npm install --save passport passport-jwt
     ```
+
     in app.js:
     ```
     import passport from 'passport'
     ...
     app.use(passport.initialize())
     ```
+
     and for vnrserver, we create a UserAuthenticator middleware:
     ```
     import passport from 'passport'
@@ -331,6 +347,7 @@ here's how to setup both environments:
     ```
     npm install --save rethinkdbdash
     ```
+
     we add a connector file, or in vnrserver, we call it rethinkdbPool.js
     ```
     import rethinkdbdash from 'rethinkdbdash'
@@ -340,10 +357,12 @@ here's how to setup both environments:
 
     module.exports = r
     ```
+
     we replace all `import r from 'rethinkdb'` to
     ```
     import r from '${path to rethinkdbPool.js}'
     ```
+    
     we don't need to do `run(conn)` or `.then((users) => users.toArray()))` anymore.
 
 23. testing:
