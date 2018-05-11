@@ -75,7 +75,7 @@ UserController.post('/login', async (req, res) => {
       }
     } else {
       //mock password check to prevent timing attack
-      await sleep(Math.random() * 80 + 180)
+      await sleep(Math.random() * 100 + 450)
     }
   }
   res.status(400).json('invalid login credentials')
