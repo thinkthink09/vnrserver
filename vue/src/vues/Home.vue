@@ -16,7 +16,7 @@
           to="/register"
           class="mt-1 btn btn--large"
         >
-          <div class="btn__content">sign up</div>
+          <div class="btn__content test-sign-up-button">sign up</div>
         </router-link>
       </v-flex>
     </v-layout>

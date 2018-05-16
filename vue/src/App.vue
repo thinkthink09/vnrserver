@@ -13,7 +13,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-title
         pointer
-        class="mr-3"
+        class="mr-3 test-register-button"
         v-if="$store.state.user === null"
         @click="routeTo('/register')"
       >
@@ -22,7 +22,7 @@
 
       <v-toolbar-title
         pointer
-        class="mr-3"
+        class="mr-3 test-login-button"
         v-if="$store.state.user === null"
         @click="routeTo('/login')"
       >
@@ -31,7 +31,7 @@
 
       <v-toolbar-title
         pointer
-        class="mr-3"
+        class="mr-3 test-login-message"
         v-if="$store.state.user !== null"
       >
         Welcome, {{$store.state.user.name}}!
@@ -39,7 +39,7 @@
 
       <v-toolbar-title
         pointer
-        class="mr-3"
+        class="mr-3 test-logout-button"
         v-if="$store.state.user !== null"
         @click="logout"
       >
