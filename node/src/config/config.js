@@ -25,7 +25,7 @@ module.exports = {
     password: process.env.DB_PASS || 'rethinkdb',
     servers: [
       {
-        host: process.env.DB_HOST || 'ec2-54-149-69-99.us-west-2.compute.amazonaws.com',
+        host: process.env.DB_HOST || 'XXXX.amazonaws.com',
         port: process.env.DB_PORT || 28015
       }
     ]
