@@ -121,7 +121,12 @@ function getUsersWithEmail(email) {
 function createUser(user) {
   user.hashPassword()
   return r.table(User.table)
-  .insert(user).then((result) => result.inserted)
+  .insert(user).then((result) => {
+    if (result.inserted) {
+      user.id = result.generated_keys[0]
+    }
+    return result.inserted
+  })
 }
 
 function updateUser(user) {
