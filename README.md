@@ -36,6 +36,20 @@ node$ npm start;
 
 ---
 
+## Preparing DB:
+
+in your db instance, run the following:
+
+```
+r.db('rethinkdb').table('users').insert({id: 'rethinkdb', password: 'rethinkdb'})
+r.db('Training').grant('rethinkdb', {read: true, write: true, config: false});
+r.db("Training").table("Users").indexCreate("email")
+```
+
+we'll work on how we can make the server automatically run those when start up later
+
+---
+
 ## Notes:
 
 here's how to setup both environments:
